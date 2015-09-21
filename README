@@ -1,0 +1,41 @@
+----------------------------------------------------------------------------
+spring-security-form-java-config
+----------------------------------------------------------------------------
+
+Maven commands:
+
+1) mvn clean install       					=> do the whole maven thing
+2) mvn clean install tomcat7:run-war-only   => Run an instance of Tomcat7 with the WAR deployed on it
+3) mvn clean install tomcat7:deploy         => Deploy on a locally running version of Tomcat7
+
+----------------------------------------------------------------------------
+NOTES
+----------------------------------------------------------------------------
+
+1) If you run this demo using MongoDB as your user store, then you must first add a User model into Mongo.
+Open your mongo shell and type the following:
+
+> use codehustler
+switched to db codehustler
+> db.users.insert( { 'username': 'user', 'password': '12dea96fec20593566ab75692c9949596833adc9', 'role': 'ROLE_USER' } );
+> db.users.insert( { 'username': 'admin', 'password': 'd033e22ae348aeb5660fc2140aec35850c4da997', 'role': 'ROLE_ADMIN' } );
+> exit
+
+The passwords are SHA encoded. 
+The admin password is: admin 
+The user password is: user
+
+
+2) Once command number 2 is run, you will be able to access the demo using the following URL:
+
+http://localhost:8080
+
+Note: this should redirect you to HTTPS and port 8443. There may be a warning screen as the SSL certificate
+is dynamically created using a maven plugin and is intended for development purposes only.
+
+
+3) In order to run tomcat7:deploy the following must be in your local tomcat-users.xml:
+
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<user username="admin" password="admin" roles="manager-gui,manager-script"/>
