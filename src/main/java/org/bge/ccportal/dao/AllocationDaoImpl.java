@@ -16,8 +16,8 @@ public class AllocationDaoImpl implements AllocationDao {
 
     @Override
     public void insert(Allocation allocation) {
-        String sql = "INSERT INTO ALLOCATION "
-                + "(product, product_name, force_open, force_close, meeting, overflow) values (?,?,?,?,?,?)";
+        String sql = "INSERT INTO BGE_PERCENTAGE_ROUTING "
+                + "(product, product_name, force_open, force_close, meeting, overflow, overflow2) values (?,?,?,?,?,?,?)";
 
         Connection conn = null;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -30,7 +30,7 @@ public class AllocationDaoImpl implements AllocationDao {
     @Override
     public Allocation findByProduct(String product) {
 
-        String sql = "select * from ALLOCATION where product = " + product;
+        String sql = "select * from BGE_PERCENTAGE_ROUTING where product = " + product;
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Allocation> allocationList = jdbcTemplate.query(sql, new AllocationRowMapper());
@@ -41,7 +41,7 @@ public class AllocationDaoImpl implements AllocationDao {
     public List<Allocation> getAll() {
         List allocationList = new ArrayList();
 
-        String sql = "select product, product_name, force_open, force_close, meeting, overflow from ALLOCATION";
+        String sql = "select product, product_name, force_open, force_close, meeting, overflow, overflow2 from BGE_PERCENTAGE_ROUTING";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         allocationList = jdbcTemplate.query(sql, new AllocationRowMapper());
@@ -51,19 +51,19 @@ public class AllocationDaoImpl implements AllocationDao {
     @Override
     public void update(Allocation allocation) {
         System.out.println("FindMe Inside DAO: "+ allocation.describe());
-        String sql = "UPDATE ALLOCATION set force_open = ?, force_close = ?, meeting = ?, overflow = ? where product = ?";
+        String sql = "UPDATE BGE_PERCENTAGE_ROUTING set force_open = ?, force_close = ?, meeting = ?, overflow = ?, overflow2 = ? where product = ?";
         
         Connection conn = null;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         jdbcTemplate.update(
                 sql,
-                new Object[]{allocation.getForce_open(), allocation.getForce_close(), allocation.getMeeting(), allocation.getOverflow(), allocation.getProduct()});
+                new Object[]{allocation.getForce_open(), allocation.getForce_close(), allocation.getMeeting(), allocation.getOverflow(), allocation.getOverflow2(), allocation.getProduct()});
     }
 
     @Override
     public void delete(String product) {
-        String sql = "DELETE from ALLOCATION where product = " + product;
+        String sql = "DELETE from BGE_PERCENTAGE_ROUTING where product = " + product;
 
         Connection conn = null;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

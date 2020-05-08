@@ -5,7 +5,7 @@
                                 <!--Bread Crumbs-->
                                 <div class="bcrumbwpr">					
                                     <div class="breadcrumbs">
-                                        <img src="${pageContext.servletContext.contextPath}/static/images/home-icon.png"><a href="/">Home</a>
+                                        <img src="${pageContext.servletContext.contextPath}/static/images/home-icon.png"><a href="${pageContext.servletContext.contextPath}/">Home</a>
                                     </div>
                                 </div>
                                 <!--End Bread Crumbs-->

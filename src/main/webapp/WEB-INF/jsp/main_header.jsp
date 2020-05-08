@@ -19,9 +19,8 @@
                 <div class="hdrwrpr">
                     <div class="header">
                         <div class="tagline"><h1>&nbsp;</h1></div>
-                        <a class="sitelogo" alt=" " href="/">
+                        <a class="sitelogo" alt=" " href="${pageContext.servletContext.contextPath}/">
                             <img src=<c:url value='/static/images/Bradford-logo.png'/>></a>
-                            <!--<img src=<c:url value='/static/theme/ham/img/logo.png'/>></a>-->
                         <div class="clear"></div>
                     </div>    
                     <div class="mainNav">  
@@ -41,18 +40,12 @@
                 <div class="clear"></div>
                 <div class="pagetoolsblock floatRight">
                     <div class="floatRight">
-                        <p class="floatRight">
+                        <p class="floatRight padRight">
                             <a href="<c:url value='/logout'/>"><sec:authentication property="principal.username" />, Logout</a>    	
                         </p>
                     </div>
                 </div> 
                 <div class="block">
                     <div class="mainintwpr">
-                        <!--                        <div class="intleft">
-                                                    <div id="CT_HeaderLeft_0_divPlaceholder" style="width: 224px;">&nbsp;</div>
-                                                                                <div class="navbanner">
-                                                                                    <h1>                                    <a href="/contact-us/">Contact Us</a></h1>
-                                                                                </div>
-                                                </div>	-->
                         <div class="intright">
                             <div class="inter2clmrightin">

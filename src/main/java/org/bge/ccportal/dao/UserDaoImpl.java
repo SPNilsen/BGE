@@ -18,10 +18,10 @@ public class UserDaoImpl implements UserDao {
     public void insertData(User user) {
 
         //Add the new User, Add the Role After
-        String sql_user = "INSERT INTO users "
+        String sql_user = "INSERT INTO BGE_users "
                 + "(username, password, enabled) VALUES (?, ?, ?)";
 
-        String sql_role = "INSERT INTO user_roles "
+        String sql_role = "INSERT INTO BGE_user_roles "
                 + "(username, ROLE) VALUES (?, 'ROLE_USER')";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -46,17 +46,18 @@ public class UserDaoImpl implements UserDao {
     public List<User> getUserList() {
         List userList = new ArrayList();
 
-        String sql = "select * from users";
+        String sql = "select username, password, enabled from BGE_users";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        System.out.println("UserDaoImpl:52");
         userList = jdbcTemplate.query(sql, new UserRowMapper());
         return userList;
     }
 
     @Override
     public void deleteData(String username) {
-        String sql_roles = "delete from user_roles where username='" + username + "'";
-        String sql_user = "delete from users where username='" + username + "'";
+        String sql_roles = "delete from BGE_user_roles where username='" + username + "'";
+        String sql_user = "delete from BGE_users where username='" + username + "'";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         
         jdbcTemplate.update(sql_roles);
@@ -68,7 +69,7 @@ public class UserDaoImpl implements UserDao {
     public void updateData(User user) {
 
         //Update the User
-        String sql = "UPDATE users set password = ?, enabled = ? where username = ?";
+        String sql = "UPDATE BGE_users set password = ?, enabled = ? where username = ?";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
 //        Map<String,Object> params = new HashMap<String,Object>();
@@ -88,7 +89,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUser(String username) {
         List<User> userList = new ArrayList<User>();
-        String sql = "select * from users where username='" + username + "'";
+        String sql = "select username, password, enabled from BGE_users where username='" + username + "'";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         userList = jdbcTemplate.query(sql, new UserRowMapper());
         return userList.get(0);

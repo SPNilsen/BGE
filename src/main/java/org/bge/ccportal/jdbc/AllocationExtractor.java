@@ -25,7 +25,7 @@ public class AllocationExtractor implements ResultSetExtractor<Allocation> {
                             val5 = true;    
                         }
                         
-		Allocation allocation = new Allocation(resultSet.getString(1),resultSet.getString(2),val3,val4,val5,resultSet.getInt(6));
+		Allocation allocation = new Allocation(resultSet.getString(1),resultSet.getString(2),val3,val4,val5,resultSet.getInt(6),resultSet.getInt(7));
 		return allocation;
 	}
 

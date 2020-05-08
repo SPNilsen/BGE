@@ -2,10 +2,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.bge</groupId>
-	<artifactId>bge-cc-portal</artifactId>
+	<artifactId>CCPortal</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>BGE Portal - Java Config</name>
+	<name>BGE Portal</name>
 
 	<organization>
 		<name>The Bradford Group Ltd</name>
@@ -56,7 +56,7 @@
 
 		<plugin.lifecycle.version>1.0.0</plugin.lifecycle.version>
 		<plugin.compiler.version>2.3.2</plugin.compiler.version>
-		<plugin.keytool.version>1.3</plugin.keytool.version>
+		<!--<plugin.keytool.version>1.3</plugin.keytool.version>-->
 		<plugin.tomcat7.version>2.1</plugin.tomcat7.version>
 		<plugin.clean.version>2.5</plugin.clean.version>
 		<plugin.war.version>2.4</plugin.war.version>
@@ -127,6 +127,15 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+
+
+                <!--SQL Server Open Source Library-->
+                <dependency>
+                        <groupId>net.sourceforge.jtds</groupId>
+                        <artifactId>jtds</artifactId>
+                        <version>1.3.1</version>
+                </dependency>
+
 
 <!--		 MongoDB Libraries 
 
@@ -214,6 +223,18 @@
             <version>${spring.security.version}</version>
         </dependency>
 
+        <!--LDAP-->
+                <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-ldap</artifactId>
+            <version>4.0.2.RELEASE</version>
+        </dependency>
+        
     </dependencies>
 
     <!-- Additional Repositories (Needed for Javax dependencies) -->
@@ -307,7 +328,7 @@
 
             <!-- This plugin generates a Java Keystore for use with SSL -->
 
-            <plugin>
+<!--            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>keytool-maven-plugin</artifactId>
                 <version>${plugin.keytool.version}</version>
@@ -336,7 +357,7 @@
                     <alias>tomcat</alias>
                     <keyalg>RSA</keyalg>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>

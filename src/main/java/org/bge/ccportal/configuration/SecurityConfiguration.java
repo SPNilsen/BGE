@@ -1,15 +1,20 @@
 package org.bge.ccportal.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Arrays;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import javax.sql.DataSource;
 
 
 /**
@@ -23,22 +28,54 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+    private static Logger logger = Logger
+            .getLogger(SecurityConfiguration.class.toString());
 
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
-                .authoritiesByUsernameQuery(
-                        "select username, role from user_roles where username=?");
+    @Override
+    protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
+        authManagerBuilder.authenticationProvider(activeDirectoryLdapAuthenticationProvider()).userDetailsService(userDetailsService());
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(Arrays.asList(activeDirectoryLdapAuthenticationProvider()));
+        }
 
+    @Bean
+    public AuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
+        ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider("bgeltd.com", "ldap://nilbgedc02.bgeltd.com:389");
+        provider.setAuthoritiesMapper(new SimpleAuthorityMapper());
+        provider.setConvertSubErrorCodesToExceptions(true);
+        provider.setUseAuthenticationRequestCredentials(true);
+
+        return provider;
+    }
+
+//    @Autowired
+//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        // The authentication provider below is the simplest provider you can use
+//        // The users, their passwords and roles are all added as clear text
+////        auth
+////                .inMemoryAuthentication()
+////                .withUser("admin").password("qwe123").roles("ADMIN")
+////                .and()
+////                .withUser("user").password("123456").roles("USER");
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select username, password, enabled from AppUser a where username=?")
+//                .authoritiesByUsernameQuery(
+//                        "select a.username, r.role from AppUser a " +
+//                                "join AppUserRole b on a.AppUserId = b.AppUserId " +
+//                                "join Role r on b.RoleId = r.RoleId " +
+//                                "where a.username=?");
+//    }
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//
+//    }
     @Override
     public void configure(WebSecurity web) throws Exception {
         // This is here to ensure that the static content (JavaScript, CSS, etc)
@@ -103,5 +140,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidSessionUrl("/login?time=1")
                 .maximumSessions(1);
     }
-
 }

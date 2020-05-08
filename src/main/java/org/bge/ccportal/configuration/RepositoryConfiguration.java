@@ -22,10 +22,10 @@ public class RepositoryConfiguration
 	public DataSource getDataSource()
 	{
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-		driverManagerDataSource.setDriverClassName( "com.mysql.jdbc.Driver" );
-		driverManagerDataSource.setUrl( "jdbc:mysql://localhost:3306/ccportal" );
-		driverManagerDataSource.setUsername( "ccportal" );
-		driverManagerDataSource.setPassword( "!ccp0rtal!" );
+		driverManagerDataSource.setDriverClassName( "net.sourceforge.jtds.jdbc.Driver" );
+		driverManagerDataSource.setUrl( "jdbc:jtds:sqlserver://DB-PRD-CiscoICM.bgeltd.com:1433/CiscoICM" );
+		driverManagerDataSource.setUsername( "icmGuiBGE" );
+		driverManagerDataSource.setPassword( "cEAc_A_Kb_36" );
 		return driverManagerDataSource;
 	}
 }

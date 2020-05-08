@@ -37,7 +37,7 @@
                     </c:if>
                     <c:if test="${not empty param.time}">
                         <div class="msg-container time">
-                            You've been logged out due to inactivity.
+                            You've logged out successfully.
                         </div>
                     </c:if>
 

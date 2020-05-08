@@ -7,18 +7,20 @@ public class Allocation {
     private boolean force_close;
     private boolean meeting;
     private int overflow;
+    private int overflow2;
     private String product_name;
 
     public Allocation() {
     }
 
-    public Allocation(String product, String product_name, boolean force_open, boolean force_close, boolean meeting, int overflow) {
+    public Allocation(String product, String product_name, boolean force_open, boolean force_close, boolean meeting, int overflow, int overflow2) {
         this.product = product;
         this.product_name = product_name;
         this.force_open = force_open;
         this.force_close = force_close;
         this.meeting = meeting;
         this.overflow = overflow;
+        this.overflow2 = overflow2;
     }
 
     /**
@@ -104,6 +106,20 @@ public class Allocation {
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
     }
+    
+    /**
+     * @return the overflow2
+     */
+    public int getOverflow2() {
+        return overflow2;
+    }
+
+    /**
+     * @param overflow2 the overflow2 to set
+     */
+    public void setOverflow2(int overflow2) {
+        this.overflow2 = overflow2;
+    }
 
     public String describe() {
         StringBuilder sb = new StringBuilder();
@@ -118,7 +134,10 @@ public class Allocation {
                 .append(", Meeting: ")
                 .append(this.meeting)
                 .append(", Overflow: ")
-                .append(this.overflow);
+                .append(this.overflow)
+                .append(", Overflow2: ")
+                .append(this.overflow2);
         return sb.toString();
     }
+
 }

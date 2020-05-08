@@ -20,7 +20,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
 
     @Override
     public void insert(GlobalFlag globalFlag) {
-        String sql = "INSERT INTO GlobalFlag "
+        String sql = "INSERT INTO BGE_GlobalFlag "
                 + "(id, emergency, weather) values (?,?,?)";
 
         Connection conn = null;
@@ -36,7 +36,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
     @Override
     public GlobalFlag findById(int id) {
 
-        String sql = "select * from Global_Flag where id = " + id;
+        String sql = "select * from BGE_Global where id = " + id;
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<GlobalFlag> globalFlagList = jdbcTemplate.query(sql, new GlobalFlagRowMapper());
@@ -47,7 +47,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
     public List<GlobalFlag> getAll() {
         List globalFlagList = new ArrayList();
 
-        String sql = "select id, emergency, weather from Global_Flag";
+        String sql = "select id, emergency, weather from BGE_Global";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         globalFlagList = jdbcTemplate.query(sql, new GlobalFlagRowMapper());
@@ -56,7 +56,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
 
     @Override
     public void update(GlobalFlag globalFlag) {
-        String sql = "UPDATE Global_Flag set emergency = ?, weather = ? where id = ?";
+        String sql = "UPDATE BGE_Global set emergency = ?, weather = ? where id = ?";
 
         System.out.println(globalFlag.describe());
         
@@ -65,7 +65,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
 
         convertBools(globalFlag);
         
-        System.out.println("emergency: " + emergency + ", weather: " + weather);
+        System.out.println("UPDATE BGE_Global set emergency = ?, weather = ? where id = ? :: " + emergency + "," + weather + "," + globalFlag.getId());
         
         jdbcTemplate.update(
                 sql,
@@ -74,7 +74,7 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE from Global_Flag where id = " + id;
+        String sql = "DELETE from BGE_Global where id = " + id;
 
         Connection conn = null;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -86,9 +86,13 @@ public class GlobalFlagDaoImpl implements GlobalFlagDao {
         //Convert Booleans to Int's for DB
         if (globalFlag.isEmergency()) {
             emergency = 1;
+        } else {
+            emergency = 0;
         }
         if (globalFlag.isWeather()) {
             weather = 1;
+        } else {
+            weather = 0;
         }
     }
 
