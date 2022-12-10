@@ -44,7 +44,7 @@
 		<!-- Plugin and Dependency Versions -->
 
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.version>6.0.0</spring.version>
 <!--		<mongodb.version>2.11.2</mongodb.version>
 		<morphia.version>1.2.3</morphia.version>-->
                 <mysql.version>5.1.30</mysql.version>
